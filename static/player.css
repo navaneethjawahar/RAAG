@@ -65,11 +65,11 @@ input:invalid {
 }
 
 .logo {
-    padding-top:24px;
-    padding-left: 24px;
-    height: 40px;
-    width:132px;
-    filter: invert(1);
+  padding-top: initial;
+  padding-left: initial;
+  height: 100px;
+  width: 300px;
+  filter: invert(1);
 }
 
 
