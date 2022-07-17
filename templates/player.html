@@ -140,7 +140,7 @@
                     <div class="card c1">
                         <div class="albumcover">
                             <img class="albumimg" src="{{ card.0 }}" alt="" srcset=""></img>
-                            <div class="albumplay" onclick='playSong("{{ forloop.counter0 }}","{{ playlist.2 }}")'><img
+                            <div class="albumplay" onclick='playSong("{{ forloop.counter0 }}","{{ card.3 }}")'><img
                                     src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png"
                                     alt=""></img></div>
                         </div>
@@ -310,12 +310,25 @@
 
 
 
-    function playSong(id, playlistId, liked=false) {
+    // function playSong(id, playlistId, liked=true) {
+    //     if (liked){
+    //         iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&controls=0&disablekb=1&enablejsapi=1&iv_load_policy=3&vq=medium`;
+    //         console.log(id)
+    //         console.log(playlistId)
+    //         play();
+    //     } else{
+    //     iframe.src = `https://www.youtube-nocookie.com/embed/?listType=playlist&list=${playlistId}&index=${id}&autoplay=1&controls=0&disablekb=1&enablejsapi=1&iv_load_policy=3&vq=medium`;
+    //     play();
+    //     }
+    // };
+    function playSong(id, songId, liked=false) {
         if (liked){
-            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&controls=0&disablekb=1&enablejsapi=1&iv_load_policy=3&vq=medium`;
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
+            // console.log(id)
+            // console.log(playlistId)
             play();
         } else{
-        iframe.src = `https://www.youtube-nocookie.com/embed/?listType=playlist&list=${playlistId}&index=${id}&autoplay=1&controls=0&disablekb=1&enablejsapi=1&iv_load_policy=3&vq=medium`;
+        iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
         play();
         }
     };
