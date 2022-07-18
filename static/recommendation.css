@@ -111,9 +111,38 @@
   overflow: hidden;
 }
 .playlist__songTitle{
-  max-width: 30vw;
-  margin-left: 10px;
+  max-width: 15vw;
+  margin-left: 2px;
 }
+.playlist__likeDislike{
+    max-width: 15vw;
+    margin-left: 15px;
+  }
+
+.fa {
+font-size: 60px;
+cursor: pointer;
+user-select: none;
+margin-left: 2px;
+}
+  
+.hoveup {
+color: green;
+}
+.hoveup:hover {
+    transform: scale(1.4);
+    /* color: green; */
+    }
+
+.hovedown:hover {
+    transform: scale(1.2);
+    /* color: green; */
+    }
+
+.hovedown {
+    color: red;
+    }
+    
 .playlist__headerAlbum{
   max-width: 10vw;
 }
