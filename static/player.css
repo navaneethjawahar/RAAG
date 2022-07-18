@@ -652,12 +652,19 @@ input:invalid {
     align-items: center;
 }
 
-.ytbPlayerCont {
+/* .ytbPlayerCont {
     position: absolute;
     bottom: 0;
     pointer-events: none;
+} */
+.ytbPlayerCont {
+  float: left;
+  padding-left: 2px;
+  height: auto;
+  position: revert; // added
+  width: 188px;
+  z-index: 1; // added
 }
-
 
 .ytbPlayer {
     width: 100%;
