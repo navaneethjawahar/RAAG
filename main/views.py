@@ -100,6 +100,26 @@ def playlist(request):
     # print(list(playlist_row)[0].song_title)
     return render(request, 'playlist.html', {'song':song,'user_playlist':user_playlist})
 
+
+@login_required(login_url="login/")
+def recommendation(request):
+    # if request.user.is_anonymous:
+    #     return redirect('/login')
+    cur_user = playlist_user.objects.get(username = request.user)
+    try:
+      song = request.GET.get('song')
+      song = cur_user.playlist_song_set.get(song_title=song)
+      song.delete()
+    except:
+      pass
+    if request.method == 'POST':
+        add_playlist(request)
+        return HttpResponse("")
+    song = 'kSFJGEHDCrQ'
+    user_playlist = cur_user.playlist_song_set.all()
+    # print(list(playlist_row)[0].song_title)
+    return render(request, 'recommendation.html', {'song':song,'user_playlist':user_playlist})
+
 @login_required(login_url="login/")
 def search(request):
   if request.method == 'POST':
