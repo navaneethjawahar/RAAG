@@ -280,6 +280,7 @@
 
 
     var player;
+    var videoId_G;
     var pauseButton = document.getElementById("pauseicon");
     var playButton = document.getElementById("playicon");
     pauseButton.classList.toggle("hidden");
@@ -289,8 +290,23 @@
 
     var dur;
 
+    // function onYouTubeIframeAPIReady() {
+    //     console.log()
+    //     player = new YT.Player('player', {
+    //       videoId: videoId,
+    //       playerVars: {
+    //         'playsinline': 1
+    //       },
+    //       events: {
+    //         'onReady': onPlayerReady,
+    //         'onStateChange': onPlayerStateChange
+    //       }
+    //     });
+    //   }
+
     // this function gets called when API is ready to use
     function onYouTubePlayerAPIReady() {
+        console.log(iframe.src)
         // create the global player from the specific iframe (#video)
         player = new YT.Player('video', {
             events: {
@@ -321,14 +337,18 @@
     //     play();
     //     }
     // };
-    function playSong(id, songId, liked=false) {
+    function playSong(id,songId, liked=false) {
+        videoId = songId;
+        player.loadVideoById(songId);
         if (liked){
-            iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
+            //iframe.src = `https://www.youtube-nocookie.com/embed/${songId}`;
             // console.log(id)
             // console.log(playlistId)
+            //player.loadVideoById(songId);
             play();
         } else{
-        iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
+        //iframe.src = `https://www.youtube-nocookie.com/embed/${songId}`;
+        //player.loadVideoById(songId);
         play();
         }
     };
@@ -502,10 +522,27 @@ progressBar.addEventListener('input', function () {
           'duration': $("#duration").text(),
           'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
         },
-
+        callback: function(){
+            getLikedList().then(function(list){
+                list.forEach(function(value, index){
+                if(value.video_id == youtube_video_id){
+                    //highlight icon
+                    $("#stroke").addClass("hidden")
+                    $("#stroke").removeClass("hidden")
+                }
+            })
+            })
+            
+        }
       })
 
     });
+
+    function getLikedList(){
+        return Promise.resolve([{
+            video_id: "GzU8KqOY8YA"
+        }])
+    }
 </script>
 </body>
 
