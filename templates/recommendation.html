@@ -3,6 +3,8 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'recommendation.css' %}?{% now " U " %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock %}
 
 {% block home %}
@@ -20,12 +22,12 @@ active
 
 	<div class="playlist__left">
 		<div class="playlist__album">
-			<img src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png" alt="" class="playlist__img">
+			<img src="https://i.ibb.co/hf7Q6M0/recommendations.png" alt="recommendations image" class="playlist__img">
         </div>
     </div>
     <div class="playlist__right">
-        <div style='font-weight: 700;font-size: 12px;'>PLAYLIST</div>
-        <div class="playlist__name">Liked Songs</div>
+        <div style='font-weight: 700;font-size: 12px;'>Your Recommendations</div>
+        <div class="playlist__name">Lists</div>
         <div>{{ request.user }}<span class='grey_text'> . {{user_playlist.count}} Songs<span></div>
     </div>
 
@@ -56,15 +58,22 @@ active
 
 
     <div class="playlist__songlist">
+        {% csrf_token %}
     {% for song in user_playlist %}
     <form action="" method="get">
-        <div class="playlist__song playlist__row" onclick='playSong("{{ song.song_youtube_id }}","false","true")'>
+        <!-- {% csrf_token %} -->
+        <div class="playlist__song playlist__row" onclick='playSong(0,"{{ song.song_youtube_id }}","true")'>
         <div class="playlist__headerTitle">
           <img class="playlist__albumimg" src="{{song.song_albumsrc}}" alt =''/>
 
           <div class="playlist__songTitle ellipsis_one_line">
           {{song.song_title}}
           </div>
+          <div class="playlist__likeDislike ellipsis_one_line">
+            <i onclick="myFunction('{{ song.song_youtube_id }}',1)" class="fa fa-thumbs-up hoveup"></i>
+            <i onclick="myFunction('{{ song.song_youtube_id }}',2)" class="fa fa-thumbs-down hovedown"></i>
+            <!-- <i class="fa fa-thumbs-up"></i> -->
+            </div>  
           <textarea name="song" id="song_name_delete" cols="1" rows="1">{{song.song_title}}</textarea>
 
           </div>
@@ -72,7 +81,7 @@ active
         <div class="playlist__headerDate">{{song.song_date_added}}</div>
         <div class="playlist__headerDuration">
         {{song.song_dur}}
-        <button type='submit' class="delete"><img src="https://cdn.discordapp.com/attachments/768083738848133130/777588678028951572/delete-icon-28.jpg" alt=""</button>
+        <button type='submit' class="delete"><img src="https://cdn.discordapp.com/attachments/768083738848133130/777588678028951572/delete-icon-28.jpg" alt="" />
         </div>
     </div>
     </form>
@@ -80,7 +89,28 @@ active
     </div>
 
 </div>
+<script>
+    function myFunction(videoId,x) {
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        if (x==1){
+            console.log('Thumbs up')
+            var liked = true
+        } else{
+            console.log('Thumbs down')
+            var liked = false
+        }
+        $.ajax({
+                type:'PUT',
+                headers: {'X-CSRFToken': csrftoken},
+                url:window.location.pathname,
+                data:JSON.stringify({
+                'videoId':videoId,
+                'liked':liked,
+                'csrfmiddlewaretoken': csrftoken
+                })})
 
+}
+</script>
 
 {% endblock %}
 
